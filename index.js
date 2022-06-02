@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-import { doMath } from './doMath.js';
+import { doMath } from "./doMath.js";
 import {
   solveParanthesisFn,
   raiseToPowerFn,
@@ -8,12 +8,12 @@ import {
   divideFn,
   addFn,
   subtractFn,
-} from './operations.js';
+} from "./operations.js";
 
-const calc = '20+((5+(4+6*2))/3)+2^4/8-17-(6*2)*2/4';
-const calc2 = '70-3*13-8/2*4-2^3-9+3';
-const calc3 = '5+(4^3/2^4)';
-const power = '-2^3*22-12^2-3^2*-2^3';
+const calc = "20+((5+(4+6*2))/3)+2^4/8-17-(6*2)*2/4";
+const calc2 = "70-3*13-8/2*4-2^3-9+3";
+const calc3 = "5+(4^3/2^4)";
+const power = "-2^3*22-12^2-3^2*-2^3";
 // ----------- -8*22-144-9*-8
 // ----------- -176-144--72 = -176-72 = -248
 
