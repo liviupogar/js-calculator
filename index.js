@@ -1,6 +1,5 @@
 'use strict';
 
-import { doMath } from './doMath.js';
 import { addSubFn } from './addSub.js';
 import {
   solveParanthesisFn,
@@ -13,12 +12,12 @@ const calc = '10+((5+(4+6*2))/3)+2^4/8-17-(6*2)*2/4';
 const calc2 = '70-3*13-8/2*4-2^3-9+3';
 const calc3 = '5+(4^3/2^4)';
 const power = '-2^4*22-12^2-3^2-2^3';
-const noNeg = '20+((5+(4+6*2))/3)+2^4/8-7+(6*2)*2/4'; // = 16
+const positives = '20+((5+(4+6*2))/3)+2^4/8-7+(6*2)*2/4';
 const md = '-2^3+4';
 
 console.log(resolveFn(calc));
 
-// function evil(str) {
+// function magic(str) {
 //   return new Function('return ' + str)();
 // }
 
