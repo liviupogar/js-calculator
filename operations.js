@@ -1,6 +1,7 @@
 'use strict';
 
 import { doMath } from './doMath.js';
+import { addSubFn } from './addSub.js';
 
 function solveParanthesisFn(str) {
   if (str.includes(')')) {
@@ -14,22 +15,10 @@ function solveParanthesisFn(str) {
       let strToCalculate = raiseToPowerFn(insideParanthesis);
 
       // Multiply and divide in order of appearance
-      while (strToCalculate.match(/\*|\//g)) {
-        let operator =
-          strToCalculate[
-            strToCalculate.indexOf(strToCalculate.match(/\*|\//g)[0])
-          ];
-        strToCalculate = doMath(strToCalculate, operator);
-      }
+      strToCalculate = multiplyDivideFn(strToCalculate);
 
       // Add and subtract in order of appearance
-      while (strToCalculate.match(/\+|\-/g)) {
-        let operator =
-          strToCalculate[
-            strToCalculate.indexOf(strToCalculate.match(/\+|\-/g)[0])
-          ];
-        strToCalculate = doMath(strToCalculate, operator);
-      }
+      strToCalculate = addSubtractFn(strToCalculate);
 
       endResult = strStart.concat(strToCalculate, strEnd);
     }
@@ -40,44 +29,52 @@ function solveParanthesisFn(str) {
 
 function raiseToPowerFn(str) {
   if (str.includes('^')) {
-    return doMath(str, '^');
+    let newStr = str;
+    while (newStr.includes('^')) {
+      newStr = doMath(newStr, '^');
+    }
+    return newStr;
   }
   return str;
 }
 
-function multiplyFn(str) {
-  if (str.includes('*')) {
-    return doMath(str, '*');
+function multiplyDivideFn(str) {
+  if (str.match(/\*|\//g)) {
+    let newStr = str;
+    while (newStr.match(/\*|\//g)) {
+      let operator = newStr.match(/\*|\//g)[0];
+      newStr = doMath(newStr, operator);
+    }
+    return newStr;
   }
   return str;
 }
 
-function divideFn(str) {
-  if (str.includes('/')) {
-    return doMath(str, '/');
+function addSubtractFn(str) {
+  let strToCalculate = str;
+  let opers = strToCalculate.match(/\+|\-/g)
+    ? strToCalculate.match(/\+|\-/g).length
+    : 0;
+  let negFirst = strToCalculate[0] == '-' ? true : false;
+  while ((negFirst && opers > 1) || (!negFirst && opers > 0)) {
+    if (negFirst) {
+      let operator = strToCalculate.match(/\+|\-/g)[1];
+      strToCalculate = addSubFn(strToCalculate, operator, negFirst);
+      opers = strToCalculate.match(/\+|\-/g)
+        ? strToCalculate.match(/\+|\-/g).length
+        : 0;
+      negFirst = strToCalculate[0] == '-' ? true : false;
+    } else {
+      let operator = strToCalculate.match(/\+|\-/g)[0];
+      strToCalculate = addSubFn(strToCalculate, operator);
+      opers = strToCalculate.match(/\+|\-/g)
+        ? strToCalculate.match(/\+|\-/g).length
+        : 0;
+      negFirst = strToCalculate[0] == '-' ? true : false;
+    }
+    return strToCalculate;
   }
-  return str;
+  return strToCalculate;
 }
 
-function addFn(str) {
-  if (str.includes('+')) {
-    return doMath(str, '+');
-  }
-  return str;
-}
-
-function subtractFn(str) {
-  if (str.includes('-')) {
-    return doMath(str, '-');
-  }
-  return str;
-}
-
-export {
-  solveParanthesisFn,
-  raiseToPowerFn,
-  multiplyFn,
-  divideFn,
-  addFn,
-  subtractFn,
-};
+export { solveParanthesisFn, raiseToPowerFn, multiplyDivideFn, addSubtractFn };
